@@ -20,6 +20,7 @@ blocks:
           value: 'on'
         - name: GOFLAGS
           value: '-mod=vendor'
+    dependencies: []
   - name: Test
     task:
       env_vars:
@@ -36,6 +37,8 @@ blocks:
         - name: Test
           commands:
             - go test ./...
+    dependencies:
+      - Install dependencies
   - name: Build
     task:
       env_vars:
@@ -53,6 +56,8 @@ blocks:
           commands:
             - go build -v -o go-gin-app
             - artifact push project --force go-gin-app
+    dependencies:
+      - Test
 promotions:
   - name: Promotion 1
     pipeline_file: pipeline_2.yml
